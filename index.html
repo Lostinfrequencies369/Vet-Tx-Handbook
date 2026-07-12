@@ -6,10 +6,52 @@
   <meta name="theme-color" content="#f2f7f5">
   <meta name="description" content="Vet Tx Handbook — veterinary treatment poster directory">
   <title>Vet Tx Handbook</title>
-  <script src="config.js?v=20260712-2035"></script>
+  <script src="config.js?v=20260712-2045"></script>
 </head>
 <body>
+  <div id="boot-placeholders" hidden>
+    <input id="q"><button id="x"></button><button id="fs"></button><button id="menu"></button>
+    <button id="dc"></button><button id="sc"></button><div id="shade"></div><button id="mc"></button>
+    <button id="home"></button><button id="back"></button><button id="forward"></button>
+  </div>
   <noscript>This application requires JavaScript.</noscript>
-  <script src="directory-app.js?v=20260712-2035"></script>
+  <script src="directory-app.js?v=20260712-2045"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(function () {
+        var byId = function (id) { return document.getElementById(id); };
+        var q = byId('q');
+        var x = byId('x');
+        var menu = byId('menu');
+        var drawer = byId('drawer');
+        var dc = byId('dc');
+        var shade = byId('shade');
+        var sc = byId('sc');
+        var modal = byId('modal');
+        var mc = byId('mc');
+        var fs = byId('fs');
+        var home = byId('home');
+        var back = byId('back');
+        var forward = byId('forward');
+
+        if (fs && q) fs.onclick = function () { q.focus(); };
+        if (menu && drawer) menu.onclick = function () { drawer.classList.add('on'); };
+        if (dc && drawer) dc.onclick = function () { drawer.classList.remove('on'); };
+        if (sc && shade) sc.onclick = function () { shade.classList.remove('on'); };
+        if (shade) shade.onclick = function (e) { if (e.target === shade) shade.classList.remove('on'); };
+        if (mc && modal) mc.onclick = function () { modal.classList.remove('on'); };
+        if (home) home.onclick = function () {
+          if (shade) shade.classList.remove('on');
+          if (drawer) drawer.classList.remove('on');
+          var res = byId('resSec');
+          if (res) res.hidden = true;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        if (back) back.onclick = function () { history.back(); };
+        if (forward) forward.onclick = function () { history.forward(); };
+        if (x && q) x.onclick = function () { q.value = ''; q.dispatchEvent(new Event('input')); };
+      }, 50);
+    });
+  </script>
 </body>
 </html>
